@@ -1,7 +1,7 @@
 import reducers from './index'
 
 describe('reducers', () => {
-  it('has no reducers yet', () => {
-    expect(reducers).toEqual({})
+  it('has a board reducer', () => {
+    expect(Object.keys(reducers)).toEqual(['board'])
   })
 })
