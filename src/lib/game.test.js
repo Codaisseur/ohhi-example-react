@@ -5,6 +5,13 @@ threeOrMoreInARow,
 numberOfValues,
 areIdentical,
 isBoardFull,
+valueAllowed,
+rows, cols,
+duplicateRows, duplicateCols,
+isPossibleMove,
+numSquaresFilled,
+percentageFilled,
+fillBoard
 } from './game'
 
 describe('threeOrMoreInARow', () => {
@@ -61,5 +68,95 @@ describe('isBoardFull', () => {
 
   it('returns false if the board is not full', () => {
     expect(isBoardFull(board)).toBe(false)
+  })
+})
+
+describe('valueAllowed', () => {
+  it('returns true if a value is allowed in the row or col', () => {
+    expect(valueAllowed([1,1,2,0,2,1], 1)).toBe(false)
+    expect(valueAllowed([1,1,2,0,2,1], 2)).toBe(true)
+  })
+})
+
+describe('rows and cols', () => {
+  const board = [
+    [1,2,1,2],
+    [1,1,2,2],
+    [2,2,1,1],
+    [2,1,2,1]]
+
+  const columns = [
+    [1,1,2,2],
+    [2,1,2,1],
+    [1,2,1,2],
+    [2,2,1,1]]
+
+ it('return the rows or cols', () => {
+   expect(rows(board)).toEqual(board)
+   expect(cols(board)).toEqual(columns)
+ })
+})
+
+describe('duplicateRows and duplicateCols', () => {
+  const board = [
+    [1,2,2,1],
+    [1,1,1,2],
+    [1,2,2,1],
+    [2,1,1,2]]
+
+  it('return the duplicate rows or cols', () => {
+    expect(duplicateRows(board)).toEqual([0,2])
+    expect(duplicateCols(board)).toEqual([1,2])
+  })
+
+  const boardWithZeros = [
+    [0,0,2,1],
+    [0,0,0,0],
+    [0,0,2,1],
+    [0,0,1,2]]
+
+  it('ignore zeros', () => {
+    expect(duplicateRows(boardWithZeros)).toEqual([])
+    expect(duplicateCols(boardWithZeros)).toEqual([])
+  })
+})
+
+describe('numSquaresFilled', () => {
+  const boardWithZeros = [
+    [0,0,2,1],
+    [0,0,0,0],
+    [0,0,2,1],
+    [0,0,1,2]]
+
+  it('counts all squares with a values that are non-zero', () => {
+    expect(numSquaresFilled(boardWithZeros)).toEqual(6)
+  })
+})
+
+describe('isPossibleMove', () => {
+  const board = [
+    [0,0,2,1],
+    [0,0,0,0],
+    [0,0,2,1],
+    [0,0,1,2]]
+
+  it('returns true if a move is possible', () => {
+    expect(isPossibleMove(board, 0, 0, 1)).toEqual(true)
+  })
+
+  it('returns false if a move is not possible', () => {
+    expect(isPossibleMove(board, 1, 2, 2)).toEqual(false)
+  })
+})
+
+describe('fillBoard', () => {
+  const [board, locked] = fillBoard(4)
+
+  it('fills a board for 25% percent', () => {
+    expect(percentageFilled(board)).toEqual(25)
+  })
+
+  it('returns the locked values in a separate array', () => {
+    expect(locked.length).toEqual(4)
   })
 })
