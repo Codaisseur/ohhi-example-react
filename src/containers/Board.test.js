@@ -10,7 +10,13 @@ const emptyBoard = [
 ]
 
 describe('<Board />', () => {
-  const board = shallow(<Board board={emptyBoard} />)
+  const board = shallow(
+    <Board
+      board={emptyBoard}
+      dupeRows={[]}
+      dupeCols={[]}
+    />
+  )
 
   it('renders a div with class Board', () => {
     expect(board).toHaveTagName('div')
