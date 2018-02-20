@@ -1,5 +1,7 @@
 // src/reducers/board.js
 
+import { CREATE_GAME } from '../actions/types'
+
 const emptyBoard = [
   [ 0,0,0,0,0,0 ],
   [ 0,0,0,0,0,0 ],
@@ -10,5 +12,11 @@ const emptyBoard = [
 ]
 
 export default (state = emptyBoard, { type, payload } = {}) => {
-  return state
+  switch (type) {
+    case CREATE_GAME :
+      return [].concat(payload.board)
+
+    default :
+      return state
+  }
 }
