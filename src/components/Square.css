@@ -13,8 +13,7 @@
   border-color: #F8E71C;
 }
 
-.Square.locked:hover::after,
-.Square.locked.wrong::after {
+.Square.locked:hover::after {
   opacity: .3;
   content: '\f023';
   font: normal normal normal 14px/1 FontAwesome;
@@ -23,6 +22,7 @@
   -webkit-font-smoothing: antialiased;
   display: block;
   margin-top: 25px;
+  text-align: center;
 }
 
 .Square.fill-1 {
