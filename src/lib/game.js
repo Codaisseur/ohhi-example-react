@@ -131,6 +131,38 @@ export const isPossibleMove = (board, rowIndex, columnIndex, value) => {
   return true
 }
 
+export const boardHasErrors = (board) => {
+  // any dupe cols/rows?
+  if (duplicateCols(board).length > 0) return true
+  if (duplicateRows(board).length > 0) return true
+
+  const rows = board
+  const columns = cols(board)
+
+  // too many of the same value in a row?
+  if (rows.filter(row =>
+    (numberOfValues(row, 1) > row.length / 2 ||
+      numberOfValues(row, 2) > row.length / 2)
+  ).length > 0) return true
+
+  // too many of the same value in a col?
+  if (columns.filter(column =>
+    (numberOfValues(column, 1) > column.length / 2 ||
+      numberOfValues(column, 2) > column.length / 2)
+  ).length > 0) return true
+
+  // any rows/cols with more than 3 consecutive vals?
+  if (rows.map(threeOrMoreInARow).filter(e => (e.length > 0)).length > 0) return true
+  if (columns.map(threeOrMoreInARow).filter(e => (e.length > 0)).length > 0) return true
+
+  return false
+}
+
+export const gameFinished = (board) => {
+  return !boardHasErrors(board) &&
+    (numSquaresFilled(board) === board.length * board.length)
+}
+
 // Returns the number of squares on the board if isBoardFull(board), but subtracts
 // the wrongly filled squares if correctOnly is true
 export const numSquaresFilled = (board, correctOnly = false) => {
@@ -141,7 +173,7 @@ export const numSquaresFilled = (board, correctOnly = false) => {
       return sum + boardSize - numberOfValues(row, 0)
     }, 0)
 
-  if (!correctOnly) return filled
+  if (!correctOnly || !boardHasErrors(board)) return filled
 
   const dupeCols = duplicateCols(board).length
   const dupeRows = duplicateRows(board).length
