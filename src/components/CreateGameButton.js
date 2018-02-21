@@ -8,7 +8,8 @@ import './CreateGameButton.css'
 
 export class CreateGameButton extends PureComponent {
   static propTypes = {
-    createGame: PropTypes.func.isRequired
+    createGame: PropTypes.func.isRequired,
+    label: PropTypes.string
   }
 
   handleClick = () => {
@@ -21,7 +22,7 @@ export class CreateGameButton extends PureComponent {
         onClick={this.handleClick}
         className="CreateGameButton"
       >
-        New Game
+        { this.props.label || 'New Game' }
       </button>
     )
   }

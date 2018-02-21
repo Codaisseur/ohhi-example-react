@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { duplicateCols, duplicateRows, cols, threeOrMoreInARow, gameFinished } from '../lib/game'
+import { duplicateCols, duplicateRows, cols, threeOrMoreInARow } from '../lib/game'
 import Square from '../components/Square'
 import './Board.css'
 
@@ -67,8 +67,7 @@ const mapStateToProps = ({ board }) => ({
   errors: {
     rows: board.map(threeOrMoreInARow),
     cols: cols(board).map(threeOrMoreInARow)
-  },
-  finished: gameFinished(board)
+  }
 })
 
 export default connect(mapStateToProps)(Board)
